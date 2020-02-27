@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from utils import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'k(v7b7s*8p_fqfy7$_-h+9#n14s0+pl5-4wr7pb!m8)pf#8snq'
+SECRET_KEY = config.get("default", "SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -74,9 +75,20 @@ WSGI_APPLICATION = 'shopifysync.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": config.get("databases", "DATABASE_NAME"),
+        "USER": config.get("databases", "DATABASE_USER"),
+        "PASSWORD": config.get("databases", "DATABASE_PASSWORD"),
+        "HOST": config.get("databases", "DATABASE_HOST"),
+        "PORT": config.get("databases", "DATABASE_PORT"),
+        "CONN_MAX_AGE": 60,
+        "OPTIONS": {
+            "charset": "utf8",
+            "init_command": "SET "
+            "character_set_connection=utf8,"
+            "collation_connection=utf8_unicode_ci",
+        },
     }
 }
 
