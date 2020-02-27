@@ -9,13 +9,13 @@ class OrderProductsInline(admin.TabularInline):
     model = OrderProduct
     fields = ['product']
 
-    def has_add_permission(self, request):
-        """Removing add permission."""
-        return False
+    # def has_add_permission(self, request):
+    #     """Removing add permission."""
+    #     return False
 
-    def has_delete_permission(self, request, obj=None):
-        """Removing delete permission."""
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     """Removing delete permission."""
+    #     return False
 
 # Register your models here.
 

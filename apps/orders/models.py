@@ -1,5 +1,6 @@
 from django.db import models
 from shopifysync.models import BaseModel
+from apps.products.models import Product
 # Create your models here.
 
 class Order(BaseModel):
@@ -30,7 +31,9 @@ class Order(BaseModel):
 class OrderProduct(BaseModel):
     """Model for storing Products for an order."""
 
-    product = models.ForeignKey('Order', related_name='order_product',
+    order = models.ForeignKey('Order', related_name='order',
+                                on_delete='CASCADE', default=1)
+    product = models.ForeignKey(Product, related_name='order_product',
                                 on_delete='CASCADE')
 
     class Meta:
