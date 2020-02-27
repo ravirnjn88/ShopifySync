@@ -6,4 +6,4 @@ from apps.products.models import Product
 class ProductAdmin(admin.ModelAdmin):
     """Registering Order in admin."""
 
-    model = admin
+    model = Product
