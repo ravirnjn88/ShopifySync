@@ -4,7 +4,7 @@ from shopifysync.models import BaseModel
 class Product(BaseModel):
     """Model for Products."""
 
-    shopify_id = models.BigIntegerField(unique=True)
+    shopify_product_id = models.BigIntegerField(unique=True)
     title = models.CharField(max_length=500)
     body_html = models.TextField()
     vendor = models.CharField(max_length=200)
