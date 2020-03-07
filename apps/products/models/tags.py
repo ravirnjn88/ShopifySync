@@ -7,7 +7,7 @@ class Tag(BaseModel):
     """Model for storing Product tag."""
 
     name = models.CharField(max_length=50)
-    product = models.ForeignKey(Product, related_name='tag',
+    product = models.ForeignKey(Product, related_name='tags',
                                 on_delete='CASCADE')
 
     class Meta:

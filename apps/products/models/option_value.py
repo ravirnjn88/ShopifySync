@@ -7,13 +7,14 @@ class OptionValue(BaseModel):
     """Model for storing options value."""
 
     name = models.CharField(max_length=100)
-    option = models.ForeignKey(Option, related_name='option',
+    option = models.ForeignKey(Option, related_name='values',
                                on_delete='CASCADE')
 
     class Meta:
         db_table = "option_value"
         verbose_name = "Option Value"
         verbose_name_plural = "Option Values"
+        unique_together = ['name', 'option']
 
     def __unicode__(self):
         """Return name of entity."""
