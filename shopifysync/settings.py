@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.products',
-    'apps.orders'
+    'nested_admin',
+    # 'apps.orders'
 ]
 
 MIDDLEWARE = [

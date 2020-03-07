@@ -8,7 +8,7 @@ class OptionValue(BaseModel):
 
     name = models.CharField(max_length=100)
     option = models.ForeignKey(Option, related_name='values',
-                               on_delete='CASCADE')
+                               on_delete=models.CASCADE)
 
     class Meta:
         db_table = "option_value"

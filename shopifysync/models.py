@@ -8,9 +8,10 @@ from django.db import models
 class BaseModel(models.Model):
     """Custom model to be inherited as base while making other models."""
 
-    created = models.DateTimeField(
-        auto_now_add=True, editable=False, db_index=True)
-    modified = models.DateTimeField(auto_now=True, editable=False)
+    created_at = models.DateTimeField(
+        auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    deleted = models.BooleanField(default=False)
 
     class Meta:
         abstract = True

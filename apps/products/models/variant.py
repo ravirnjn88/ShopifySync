@@ -11,7 +11,7 @@ class Variant(BaseModel):
 
     shopify_varient_id = models.BigIntegerField(unique=True)
     product = models.ForeignKey(Product, related_name='variant',
-                                        on_delete='CASCADE')
+                                        on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     sku = models.CharField(max_length=200, null=True)

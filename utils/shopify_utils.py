@@ -60,7 +60,7 @@ class ShopifyProductFetch(ShopifyBaseRequest):
 
         return response.json()
 
-print(ShopifyProductFetch().fetch_single_variant(32814475477125))
+# print(ShopifyProductFetch().fetch_single_variant(32814475477125))
 
 
 # def get_shopify_headers():

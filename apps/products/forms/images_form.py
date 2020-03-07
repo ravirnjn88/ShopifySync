@@ -11,4 +11,4 @@ class ImageForm(forms.ModelForm):
 
     class Meta:
         model = Image
-        fields = ('position', 'src')
+        fields = ('position', 'src', 'width', 'height', 'alt')

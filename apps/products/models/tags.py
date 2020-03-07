@@ -8,7 +8,7 @@ class Tag(BaseModel):
 
     name = models.CharField(max_length=50)
     product = models.ForeignKey(Product, related_name='tags',
-                                on_delete='CASCADE')
+                                on_delete=models.CASCADE)
 
     class Meta:
         db_table = "tag"
