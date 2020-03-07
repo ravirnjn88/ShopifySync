@@ -18,7 +18,7 @@ class ImagesInline(nested_admin.NestedTabularInline):
 
     model = Image
     form = ImageForm
-    fields = ('position', 'src')
+    fields = ('position', 'src', 'width', 'height', 'alt')
     # readonly_fields = ( )
     show_add_link = True
     # inlines = []
