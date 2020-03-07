@@ -5,7 +5,7 @@ from .product import Product
 class Image(BaseModel):
     """Model for Images."""
 
-    shopify_image_id = models.BigIntegerField(null=True, db_index=True)
+    shopify_image_id = models.BigIntegerField(unique=True)
     product_id = models.ForeignKey(Product, related_name='images',
                                    on_delete='CASCADE')
     position =  models.IntegerField(null=True, default=1)

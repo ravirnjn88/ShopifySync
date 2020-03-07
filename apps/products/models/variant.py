@@ -9,7 +9,7 @@ class Variant(BaseModel):
 
     WEIGHT = [('lb', 'lbs'), ('oz', 'oz'), ('kg', 'kilogram'), ('g', 'gram')]
 
-    shopify_varient_id = models.BigIntegerField(null=True, db_index=True)
+    shopify_varient_id = models.BigIntegerField(unique=True)
     product = models.ForeignKey(Product, related_name='variant',
                                         on_delete='CASCADE')
     title = models.CharField(max_length=200)

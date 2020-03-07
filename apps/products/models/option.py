@@ -5,7 +5,7 @@ from .product import Product
 class Option(BaseModel):
     """Model for Shopify Product Option."""
 
-    shopify_option_id = models.BigIntegerField(db_index=True, null=True)
+    shopify_option_id = models.BigIntegerField(unique=True)
     product_id = models.ForeignKey(Product, related_name='options',
                                            on_delete='CASCADE')
     option_name = models.CharField(max_length=100, unique=True)

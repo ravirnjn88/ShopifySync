@@ -5,7 +5,7 @@ class Product(BaseModel):
     """Model for Products."""
     STATUS = [('draft', 'Draft'), ('published', 'Published')]
 
-    shopify_product_id = models.BigIntegerField(db_index=True, null=True)
+    shopify_product_id = models.BigIntegerField(unique=True)
     title = models.CharField(max_length=500)
     body_html = models.TextField()
     vendor = models.CharField(max_length=200)
