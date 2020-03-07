@@ -58,19 +58,69 @@ class ProductManager(object):
     def parse_and_create_product(self, json_data):
         """Parse and create order from shopify json data."""
         json_data['shopify_product_id'] = json_data['id']
+        # import pdb
+        # pdb.set_trace()
         product_object = self.create(**json_data)
 
         tags = json_data['tags'].split(",")
         for tag in tags:
             self.tag_manager.create(**{'product':product_object, 'name': tag})
 
-        # images = json_data['images']
-        
+        images = json_data['images']
+        for image in images:
+            image['shopify_image_id'] = image['id']
+            image['product'] = product_object
+            self.images_manager.create(**image)
 
+        options = json_data['options']
+        for option in options:
+            option['shopify_option_id'] = option['id']
+            option['product'] = product_object
+            option['option_name'] = option['name']
+            option_object = self.option_manager.create(**option)
 
+            values = option['values']
+            for value in values:
+                self.option_value_manager.create(**{'name': value, 'option': option_object})
 
+        variants = json_data['variants']
+        for variant in variants:
+            variant['shopify_variant_id'] = variant['id']
+            variant['product'] = product_object
+            variant['title'] = "{}|{}".format(product_object.title, variant['title'])
 
+            option1_value_name = variant['option1']
+            option1_object = product_object.options.filter(position=1)
+            if option1_object:
+                option1_value = option1_object[0].option_value.filter(name=variant['option1']).all()[0]
+                variant['option1'] = option1_value
+            else:
+                variant['option1'] = None
 
+            option2_value_name = variant['option2']
+            option2_object = product_object.options.filter(position=2)
+            if option2_object:
+                option2_value = option2_object[0].option_value.filter(name=variant['option2']).all()[0]
+                variant['option2'] = option2_value
+            else:
+                variant['option2'] = None
+
+            option3_value_name = variant['option3']
+            option3_object = product_object.options.filter(position=3)
+            if option3_object:
+                option3_value = option3_object[0].option_value.filter(name=variant['option3']).all()[0]
+                variant['option3'] = option3_value
+            else:
+                variant['option3'] = None
+
+            image = variant["image_id"]
+            if image:
+                image = self.images_manager.load_by_shopify_image_id(image)
+                variant['image'] = image
+            else:
+                variant['image'] = None
+
+            self.variant_manager.create(**variant)
 
 
 
@@ -78,4 +128,5 @@ from utils.shopify_utils import ShopifyProductFetch
 
 json = ShopifyProductFetch().fetch_single_product(4679803076741)
 a = json['product']
+print(a)
 ProductManager().parse_and_create_product(a)

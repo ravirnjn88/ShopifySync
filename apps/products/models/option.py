@@ -19,7 +19,7 @@ class Option(BaseModel):
 
     def __unicode__(self):
         """Return name of entity."""
-        return self.title
+        return self.option_name
 
     def __str__(self):
-        return self.title
+        return self.option_name

@@ -12,18 +12,17 @@ class OptionValueManager(object):
         except OptionValue.DoesNotExist:
             option_value = None
 
-        return option
-
+        return option_value
 
     def load_by_option(self, option):
         """Load all option value for option."""
         try:
-            option = OptionValue.objects.filter(option=option)
-        except Option.DoesNotExist:
-            option = None
+            option_value = OptionValue.objects.filter(option=option)
+        except OptionValue.DoesNotExist:
+            option_value = None
 
-        return option
+        return option_value
 
     def create(self, **kwargs):
         """Create option value corresponding to a option."""
-        return Option.objects.create(name=kwargs['name'], option=kwargs['option'])
+        return OptionValue.objects.create(name=kwargs['name'], option=kwargs['option'])

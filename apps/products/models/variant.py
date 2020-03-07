@@ -9,10 +9,10 @@ class Variant(BaseModel):
 
     WEIGHT = [('lb', 'lbs'), ('oz', 'oz'), ('kg', 'kilogram'), ('g', 'gram')]
 
-    shopify_varient_id = models.BigIntegerField(unique=True)
+    shopify_variant_id = models.BigIntegerField(unique=True)
     product = models.ForeignKey(Product, related_name='variant',
                                         on_delete=models.CASCADE)
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=500)
     price = models.DecimalField(max_digits=8, decimal_places=2)
     sku = models.CharField(max_length=200, null=True)
     position = models.IntegerField(null=True, default=1)
@@ -40,7 +40,7 @@ class Variant(BaseModel):
 
     def __unicode__(self):
         """Return name of entity."""
-        return self.src
+        return self.title
 
     def __str__(self):
-        return self.src
+        return self.title
