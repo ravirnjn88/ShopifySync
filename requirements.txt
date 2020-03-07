@@ -2,3 +2,4 @@ Django==2.2.2
 ConfigParser==3.7.4
 mysqlclient==1.4.2
 requests==2.22.0
+django-nested-admin==3.2.4
