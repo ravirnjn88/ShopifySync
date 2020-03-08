@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.products',
     'nested_admin',
-    # 'apps.orders'
+    'apps.orders'
 ]
 
 MIDDLEWARE = [

@@ -21,8 +21,6 @@ class Customer(BaseModel):
     last_order_name = models.CharField(max_length=64,null=True)
     currency = models.CharField(max_length=24)
     marketing_opt_in_level = models.CharField(max_length=24, null=True)
-    # default_address = models.ForeignKey(Address, null = True, related_name = 'default_address')
-
 
     class Meta:
         db_table = "customer"
