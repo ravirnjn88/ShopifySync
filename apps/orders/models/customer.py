@@ -22,6 +22,7 @@ class Customer(BaseModel):
     currency = models.CharField(max_length=24)
     marketing_opt_in_level = models.CharField(max_length=24, null=True)
 
+
     class Meta:
         db_table = "customer"
         verbose_name = "Customer"
