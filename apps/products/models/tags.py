@@ -14,6 +14,7 @@ class Tag(BaseModel):
         db_table = "tag"
         verbose_name = "Product Tag"
         verbose_name_plural = "Products Tag"
+        unique_together = ['name', 'product']
 
     def __unicode__(self):
         """Return name of entity."""

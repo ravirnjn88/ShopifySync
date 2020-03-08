@@ -1,9 +1,9 @@
-if __name__ == "__main__":
-    import sys, os, django
+# if __name__ == "__main__":
+#     import sys, os, django
 
-    sys.path.append("/home/raviranjan/Desktop/shopifysync")
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shopifysync.settings")
-    django.setup()
+#     sys.path.append("/home/raviranjan/Desktop/shopifysync")
+#     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shopifysync.settings")
+#     django.setup()
 
 """Contains all manager functions for Product."""
 from django.db import transaction
@@ -54,35 +54,67 @@ class ProductManager(object):
                                       admin_graphql_api_id=kwargs['admin_graphql_api_id'],
                                       published_at=kwargs['published_at'])
 
+    def update(self, pk, **kwargs):
+        """Update a product instance given pk."""
+        return Product.objects.filter(pk=pk).update(title=kwargs['title'],
+                                                  body_html=kwargs['body_html'],
+                                                  vendor=kwargs['vendor'],
+                                                  product_type=kwargs['product_type'],
+                                                  handle=kwargs['handle'],
+                                                  published_scope=kwargs['published_scope'],
+                                                  admin_graphql_api_id=kwargs['admin_graphql_api_id'],
+                                                  published_at=kwargs['published_at'])
+
+
     @transaction.atomic()
     def parse_and_create_product(self, json_data):
         """Parse and create order from shopify json data."""
         json_data['shopify_product_id'] = json_data['id']
-        # import pdb
-        # pdb.set_trace()
-        product_object = self.create(**json_data)
+        product_object = self.load_by_shopify_product_id(json_data['shopify_product_id'])
+        if not product_object:
+            product_object = self.create(**json_data)
+        else:
+            self.update(product_object.id, **json_data)
 
+        # Update or create tags
         tags = json_data['tags'].split(",")
         for tag in tags:
-            self.tag_manager.create(**{'product':product_object, 'name': tag})
+            tag_object = self.tag_manager.filter_by_name_product(tag, product_object).first()
+            if not tag_object:
+                tag_object = self.tag_manager.create(**{'product':product_object, 'name': tag})
+            else:
+                self.tag_manager.update(tag_object.id, **{'product':product_object, 'name': tag})
 
+        # Update or create Images
         images = json_data['images']
         for image in images:
             image['shopify_image_id'] = image['id']
             image['product'] = product_object
-            self.images_manager.create(**image)
+            image_object = self.images_manager.load_by_shopify_image_id(image['id'])
+            if not image_object:
+                image_object = self.images_manager.create(**image)
+            else:
+                self.images_manager.update(image_object.id, **image)
 
+        # Update or create Options and value.
         options = json_data['options']
         for option in options:
             option['shopify_option_id'] = option['id']
             option['product'] = product_object
             option['option_name'] = option['name']
-            option_object = self.option_manager.create(**option)
-
+            option_object = self.option_manager.load_by_shopify_option_id(option['id'])
+            if not option_object:
+                option_object = self.option_manager.create(**option)
+            else:
+                self.option_manager.update(option_object.id, **option)
             values = option['values']
             for value in values:
-                self.option_value_manager.create(**{'name': value, 'option': option_object})
+                option_value = option_object.option_value.filter(name=value).first()
+                if not option_value:
+                    self.option_value_manager.create(**{'name': value, 'option': option_object})
 
+
+        # Update or create variant
         variants = json_data['variants']
         for variant in variants:
             variant['shopify_variant_id'] = variant['id']
@@ -120,13 +152,17 @@ class ProductManager(object):
             else:
                 variant['image'] = None
 
-            self.variant_manager.create(**variant)
+            variant_object = self.variant_manager.load_by_shopify_variant_id(variant['id'])
+            if not variant_object:
+                variant_object = self.variant_manager.create(**variant)
+            else:
+                self.variant_manager.update(variant_object.id, **variant)
 
 
 
-from utils.shopify_utils import ShopifyProductFetch
+# from utils.shopify_utils import ShopifyProductFetch
 
-json = ShopifyProductFetch().fetch_single_product(4679803076741)
-a = json['product']
-print(a)
-ProductManager().parse_and_create_product(a)
+# json = ShopifyProductFetch().fetch_single_product(4679803076741)
+# a = json['product']
+# print(a)
+# ProductManager().parse_and_create_product(a)

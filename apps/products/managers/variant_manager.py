@@ -55,3 +55,25 @@ class VariantManager(object):
                                         image=kwargs['image'],
                                         inventory_quantity=kwargs['inventory_quantity'],
                                         requires_shipping=kwargs['requires_shipping'])
+
+    def update(self, pk, **kwargs):
+        """U vpdateariant corresponding to a product."""
+        return Variant.objects.filter(pk=pk).update( product=kwargs['product'],
+                                        title=kwargs['title'],
+                                        price=kwargs['price'],
+                                        sku=kwargs['sku'],
+                                        position=kwargs['position'],
+                                        inventory_policy=kwargs['inventory_policy'],
+                                        compare_at_price=kwargs['compare_at_price'],
+                                        fulfillment_service=kwargs['fulfillment_service'],
+                                        inventory_management=kwargs['inventory_management'],
+                                        option1=kwargs['option1'],
+                                        option2=kwargs['option2'],
+                                        option3=kwargs['option3'],
+                                        taxable=kwargs['taxable'],
+                                        barcode=kwargs['barcode'],
+                                        weight=kwargs['weight'],
+                                        weight_unit=kwargs['weight_unit'],
+                                        image=kwargs['image'],
+                                        inventory_quantity=kwargs['inventory_quantity'],
+                                        requires_shipping=kwargs['requires_shipping'])

@@ -43,3 +43,13 @@ class ImageManager(object):
                                         alt=kwargs['alt'],
                                         width=kwargs['width'],
                                         height=kwargs['height'])
+
+    def update(self, pk, **kwargs):
+        """Update image corresponding to a product."""
+        return Image.objects.filter(pk=pk).update(product=kwargs['product'],
+                                        position=kwargs['position'],
+                                        src=kwargs['src'],
+                                        admin_graphql_api_id=kwargs['admin_graphql_api_id'],
+                                        alt=kwargs['alt'],
+                                        width=kwargs['width'],
+                                        height=kwargs['height'])

@@ -39,3 +39,9 @@ class OptionManager(object):
                                         product=kwargs['product'],
                                         position=kwargs['position'],
                                         option_name=kwargs['option_name'])
+
+    def update(self, pk, **kwargs):
+        """Update option corresponding to a product."""
+        return Option.objects.filter(pk=pk).update(product=kwargs['product'],
+                                        position=kwargs['position'],
+                                        option_name=kwargs['option_name'])
