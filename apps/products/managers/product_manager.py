@@ -104,6 +104,7 @@ class ProductManager(object):
             option['option_name'] = option['name']
             option_object = self.option_manager.load_by_shopify_option_id(option['id'])
             if not option_object:
+                print("==== creating", product_object)
                 option_object = self.option_manager.create(**option)
             else:
                 self.option_manager.update(option_object.id, **option)
@@ -162,7 +163,7 @@ class ProductManager(object):
 
 # from utils.shopify_utils import ShopifyProductFetch
 
-# json = ShopifyProductFetch().fetch_single_product(4679803076741)
+# json = ShopifyProductFetch().fetch_single_product(4684578422917)
 # a = json['product']
 # print(a)
 # ProductManager().parse_and_create_product(a)

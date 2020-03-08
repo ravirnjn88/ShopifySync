@@ -8,7 +8,7 @@ class Option(BaseModel):
     shopify_option_id = models.BigIntegerField(unique=True)
     product = models.ForeignKey(Product, related_name='options',
                                            on_delete=models.CASCADE)
-    option_name = models.CharField(max_length=100, unique=True)
+    option_name = models.CharField(max_length=100)
     position = models.IntegerField(null=True, default=1)
 
     class Meta:
