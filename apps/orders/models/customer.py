@@ -3,7 +3,7 @@ from shopifysync.models import BaseModel
 
 class Customer(BaseModel):
 
-    shopify_cusomer_id = models.BigIntegerField(unique=True)
+    shopify_customer_id = models.BigIntegerField(unique=True)
     email = models.EmailField(null=True)
     accepts_marketing = models.BooleanField(default=False)
     first_name = models.CharField(max_length=104, blank=True)
@@ -11,10 +11,10 @@ class Customer(BaseModel):
     orders_count = models.IntegerField()
     state = models.CharField(max_length=64)
     total_spent = models.DecimalField(max_digits=8, decimal_places=2)
-    last_order_id = models.IntegerField(null=True)
+    last_order_id = models.BigIntegerField(null=True)
     note = models.TextField(null=True, blank=True)
     verified_email = models.BooleanField(default=False)
-    multipass_identified = models.CharField(max_length=64, null=True)
+    multipass_identifier = models.CharField(max_length=64, null=True)
     tax_exempt = models.BooleanField(default=False)
     phone = models.CharField(max_length=20, null=True)
     tags = models.TextField(null=True)

@@ -57,4 +57,4 @@ class Order(BaseModel):
         return self.order_number
 
     def __str__(self):
-        return self.order_number
+        return str(self.order_number)

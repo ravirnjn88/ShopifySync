@@ -1,14 +1,17 @@
-if __name__ == "__main__":
-    import sys, os, django
+# if __name__ == "__main__":
+#     import sys, os, django
 
-    sys.path.append("/home/raviranjan/Desktop/shopifysync")
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shopifysync.settings")
-    django.setup()
+#     sys.path.append("/home/raviranjan/Desktop/shopifysync")
+#     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "shopifysync.settings")
+#     django.setup()
 
 import requests
 from utils import config
 from utils.constants import SHOPIFY_BASE_URL, SHOPIFY_ALL_PRODUCTS_DATA_SUFFIX, SHOPIFY_SINGLE_PRODUCT_DATA_SUFFIX
 from utils.constants import SHOPIFY_SINGLE_PRODUCT_ALL_VARIANT_SUFFIX, SHOPIFY_SINGLE_VARIANT_SUFFIX
+from utils.constants import SHOPIFY_ALL_CUSTOMER_SUFFIX, SHOPIFY_SINGLE_CUSTOMER_SUFFIX
+from utils.constants import SHOPIFY_ALL_ORDERS_SUFFIX, SHOPIFY_SINGLE_order_SUFFIX
+
 
 class ShopifyBaseRequest:
 
@@ -60,7 +63,46 @@ class ShopifyProductFetch(ShopifyBaseRequest):
 
         return response.json()
 
-# print(ShopifyProductFetch().fetch_single_variant(32814475477125))
+
+class ShopifyOrderFetch(ShopifyBaseRequest):
+    """Fetch order details"""
+
+    def __init__(self, base_url=SHOPIFY_BASE_URL):
+        super(ShopifyOrderFetch, self).__init__()
+        self.base_url = SHOPIFY_BASE_URL
+
+    def fetch_all_customers(self):
+        url = "{}{}".format(self.base_url, SHOPIFY_ALL_CUSTOMER_SUFFIX)
+
+        response = self.make_request("GET", url)
+
+        return response.json()
+
+    def fetch_single_customer(self, shopify_customer_id):
+        url = "{}{}".format(self.base_url, SHOPIFY_SINGLE_CUSTOMER_SUFFIX)
+        url = url.format(customer_id=shopify_customer_id)
+        
+        response = self.make_request("GET", url)
+
+        return response.json()
+
+    def fetch_all_orders(self):
+        url = "{}{}".format(self.base_url, SHOPIFY_ALL_ORDERS_SUFFIX)
+
+        response = self.make_request("GET", url)
+
+        return response.json()
+
+    def fetch_single_order(self, shopify_order_id):
+        url = "{}{}".format(self.base_url, SHOPIFY_SINGLE_order_SUFFIX)
+        url = url.format(order_id=shopify_order_id)
+        
+        response = self.make_request("GET", url)
+
+        return response.json()
+
+
+# print(ShopifyOrderFetch().fetch_single_order(2053784240261))
 
 
 # def get_shopify_headers():

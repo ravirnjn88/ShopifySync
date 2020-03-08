@@ -68,7 +68,7 @@ class ProductManager(object):
 
     @transaction.atomic()
     def parse_and_create_product(self, json_data):
-        """Parse and create order from shopify json data."""
+        """Parse and create product from shopify json data."""
         json_data['shopify_product_id'] = json_data['id']
         product_object = self.load_by_shopify_product_id(json_data['shopify_product_id'])
         if not product_object:

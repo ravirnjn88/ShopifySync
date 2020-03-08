@@ -4,4 +4,7 @@ SHOPIFY_SINGLE_PRODUCT_DATA_SUFFIX = "/admin/api/2020-01/products/{product_id}.j
 SHOPIFY_SINGLE_PRODUCT_ALL_VARIANT_SUFFIX = "/admin/api/2020-01/products/{product_id}/variants.json"
 SHOPIFY_SINGLE_VARIANT_SUFFIX = "/admin/api/2020-01/variants/{variant_id}.json"
 
+SHOPIFY_ALL_CUSTOMER_SUFFIX = "/admin/api/2020-01/customers.json"
+SHOPIFY_SINGLE_CUSTOMER_SUFFIX = "/admin/api/2020-01/customers/{customer_id}.json"
 SHOPIFY_ALL_ORDERS_SUFFIX = "/admin/api/2020-01/orders.json"
+SHOPIFY_SINGLE_order_SUFFIX = "/admin/api/2020-01/orders/{order_id}.json"

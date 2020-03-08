@@ -16,31 +16,31 @@ class LineItemInline(nested_admin.NestedStackedInline):
 
     model = LineItem
     form = LineItemForm
-    # fields = ('position', 'src', 'width', 'height', 'alt')
-    # readonly_fields = ('position', 'src', 'width', 'height', 'alt')
-    # extra = 0
+    extra = 0
 
-    # def has_add_permission(self, request):
-    #     return False
+    def has_add_permission(self, request):
+        return False
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return False
+    def has_delete_permission(self, request, obj=None):
+        return False
 
+    def has_change_permission(self, request, obj=None):
+        return False
 
 class AddressInline(nested_admin.NestedTabularInline):
     """this inline class is used in Orders for showing related customer address directly."""
 
     model = Address
     form = AddressForm
-    # fields = ('name',)
-    # readonly_fields = ('name',)
-    # extra = 0
 
-    # def has_add_permission(self, request):
-    #     return False
+    def has_add_permission(self, request):
+        return False
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return False
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 class CustomerInline(nested_admin.NestedTabularInline):
@@ -48,16 +48,16 @@ class CustomerInline(nested_admin.NestedTabularInline):
 
     model = Customer
     form = CustomerForm
-    # fields = ('option_name', 'position')
-    # readonly_fields = ('option_name', 'position')
     inlines = [AddressInline]
-    # extra = 0
 
-    # def has_add_permission(self, request):
-    #     return False
+    def has_add_permission(self, request):
+        return False
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return False
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 
@@ -69,16 +69,15 @@ class OrderAdmin(nested_admin.NestedModelAdmin):
     model = Order
     inlines = [LineItemInline]
     extra = 0
-    # read_only = True
-    # fields = ('__all__',)
-    # readonly_fields = ('shopify_product_id', 'title', 'body_html', 'vendor', 'product_type',
-    #           'handle', 'published_scope', 'admin_graphql_api_id', 'published_at')
 
-    # def has_add_permission(self, request):
-    #     return False
+    def has_add_permission(self, request):
+        return False
 
-    # def has_delete_permission(self, request, obj=None):
-    #     return False
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
         extra_context = extra_context or {}

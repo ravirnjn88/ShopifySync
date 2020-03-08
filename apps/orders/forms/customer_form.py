@@ -13,5 +13,5 @@ class CustomerForm(forms.ModelForm):
         model = Customer
         fields = ('email', 'accepts_marketing', 'first_name', 'last_name', 'orders_count',
                   'state', 'total_spent', 'last_order_id', 'note', 'verified_email',
-                  'multipass_identified', 'tax_exempt', 'phone', 'tags', 'last_order_name',
+                  'multipass_identifier', 'tax_exempt', 'phone', 'tags', 'last_order_name',
                   'currency', 'marketing_opt_in_level')
