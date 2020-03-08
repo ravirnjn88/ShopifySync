@@ -20,4 +20,5 @@ from django.conf.urls import url, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^nested_admin/', include('nested_admin.urls')),
+    url(r'^shopifywebhooks/', include('apps.shopifywebhooks.urls'), name='shopifywebhooks_urls'),
 ]
