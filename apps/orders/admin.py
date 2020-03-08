@@ -43,12 +43,11 @@ class AddressInline(nested_admin.NestedTabularInline):
         return False
 
 
-class CustomerInline(nested_admin.NestedTabularInline):
+class OrderInline(nested_admin.NestedTabularInline):
     """this inline class is used in Orders for showing customer directly."""
 
-    model = Customer
-    form = CustomerForm
-    inlines = [AddressInline]
+    model = Order
+    # inlines = [AddressInline]
 
     def has_add_permission(self, request):
         return False
@@ -69,6 +68,7 @@ class OrderAdmin(nested_admin.NestedModelAdmin):
     model = Order
     inlines = [LineItemInline]
     extra = 0
+    list_display = ('order_number', 'customer', 'email', 'total_price')
 
     def has_add_permission(self, request):
         return False
@@ -84,3 +84,26 @@ class OrderAdmin(nested_admin.NestedModelAdmin):
         extra_context['show_save_and_continue'] = False
         extra_context['show_save'] = False
         return super(OrderAdmin, self).changeform_view(request, object_id, extra_context=extra_context)
+
+@admin.register(Customer)
+class CustomerAdmin(nested_admin.NestedModelAdmin):
+    """Registering Customer"""
+
+    model = Customer
+    inlines = [OrderInline]
+    list_display = ('first_name', 'last_name', 'email', 'orders_count', 'total_spent')
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        extra_context = extra_context or {}
+        extra_context['show_save_and_continue'] = False
+        extra_context['show_save'] = False
+        return super(CustomerAdmin, self).changeform_view(request, object_id, extra_context=extra_context)

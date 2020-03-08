@@ -10,6 +10,7 @@ from apps.products.forms.option_form import OptionForm
 from apps.products.forms.option_value_form import OptionValueForm
 from apps.products.forms.tag_form import TagForm
 from apps.products.forms.variant_form import VariantForm
+from django.utils.safestring import mark_safe
 import nested_admin
 
 
@@ -108,6 +109,7 @@ class ProductAdmin(nested_admin.NestedModelAdmin):
 
     model = Product
     inlines = [ImagesInline, OptionInline, TagInline, VariantInline]
+    list_display = ['shopify_product_id', 'title', 'product_type', 'product_image']
     extra = 0
     fields = ('shopify_product_id', 'title', 'body_html', 'vendor', 'product_type',
               'handle', 'published_scope', 'admin_graphql_api_id', 'published_at')
@@ -125,3 +127,7 @@ class ProductAdmin(nested_admin.NestedModelAdmin):
         extra_context['show_save_and_continue'] = False
         extra_context['show_save'] = False
         return super(ProductAdmin, self).changeform_view(request, object_id, extra_context=extra_context)
+
+    def product_image(self, obj):                       
+        return mark_safe('<img src="%s"/ width=50px height=50px >' % obj.images.all().first())
+    product_image.allow_tags = True
